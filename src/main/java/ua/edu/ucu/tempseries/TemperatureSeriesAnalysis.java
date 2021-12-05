@@ -162,7 +162,6 @@ public class TemperatureSeriesAnalysis {
                     nwTemps[j] = tempCopy[j];
                 }
                 tempCopy = nwTemps;
-                idx = elementNum;
             }
             tempCopy[idx] = temps[i];
 

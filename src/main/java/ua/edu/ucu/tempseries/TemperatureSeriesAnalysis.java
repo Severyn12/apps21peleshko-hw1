@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 public class TemperatureSeriesAnalysis {
     private double[] temperatures = new double[1];
     private int elementNum = 0;
+    private final double minTemp = -273.0;
 
     public TemperatureSeriesAnalysis() {    }
 
@@ -41,7 +42,7 @@ public class TemperatureSeriesAnalysis {
         double mean = average();
         double difference = 0;
         for (int i = 0; i < temperatures.length; i++) {
-            difference += Math.pow(mean - temperatures[i], 2);
+            difference += (mean - temperatures[i]) * (mean - temperatures[i]);
         }
 
         return Math.sqrt(difference / temperatures.length);
@@ -105,7 +106,8 @@ public class TemperatureSeriesAnalysis {
         double closestDist = Double.POSITIVE_INFINITY;
         for (int i = 0; i < temperatures.length; i++) {
 
-            if (Math.abs(tempValue - Math.abs(temperatures[i])) <= closestDist) {
+            if (Math.abs(tempValue - Math.abs(temperatures[i]))
+                    <= closestDist) {
                 if (Math.abs(closestEle) == Math.abs(temperatures[i])) {
                     closestEle = Math.abs(temperatures[i]);
                 }
@@ -138,12 +140,14 @@ public class TemperatureSeriesAnalysis {
         if (elementNum == 0) {
             throw new IllegalArgumentException();
         }
-        return Arrays.copyOfRange(temperatures, idxFounder(tempValue), temperatures.length);
+        return Arrays.copyOfRange(temperatures,
+                idxFounder(tempValue), temperatures.length);
     }
 
 
     public TempSummaryStatistics summaryStatistics() {
-        TempSummaryStatistics statistics = new TempSummaryStatistics(average(), deviation(), min(), max());
+        TempSummaryStatistics statistics =
+                new TempSummaryStatistics(average(), deviation(), min(), max());
         return statistics;
     }
 
@@ -152,7 +156,7 @@ public class TemperatureSeriesAnalysis {
         int idx = 0;
         for (int i = 0; i < temps.length; i++) {
 
-            if (temps[i] < -273.0) {
+            if (temps[i] < minTemp) {
                 throw new InputMismatchException();
             }
 

@@ -8,7 +8,8 @@ public final class TempSummaryStatistics {
     private final double minTemp;
     private final double maxTemp;
 
-    public TempSummaryStatistics(double mean, double stDev, double min, double max) {
+    public TempSummaryStatistics(double mean, double stDev,
+                                 double min, double max) {
         avgTemp = mean;
         devTemp = stDev;
         minTemp = min;
